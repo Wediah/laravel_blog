@@ -60,4 +60,23 @@ class Post extends Model
 
         return static::all()->firstWhere('slug', $slug);
     }
+
+
+    public static function findorFail($slug)
+    {
+//        base_path();
+//        if (!file_exists($path = resource_path("posts/{$slug}.html"))) {
+//            throw new ModelNotFoundException();
+//        }
+//
+//        return cache()->remember("posts.{$slug}", 10, fn() => file_get_contents($path));
+
+        $post = static::find($slug);
+
+        if (! $post) {
+            throw new ModelNotFoundException();
+        }
+
+        return $post;
+    }
 }

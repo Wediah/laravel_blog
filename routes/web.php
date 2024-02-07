@@ -30,3 +30,4 @@ Route::get('posts/{post}', function ($slug) {
         'post' => $post
     ]);
 });
+

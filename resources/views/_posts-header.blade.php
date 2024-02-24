@@ -20,7 +20,7 @@
                     @click="show = ! show"
                     class="py-2 pl-3 pr-9 text-sm font-semibold w-full lg:w-32 md:inline-flex text-left lg:inline-flex"
                 >
-                    Categories
+                    {{ isset($currentCategory) ? ucwords($currentCategory->name) : 'Categories' }}
 
                     <svg class="transform -rotate-90 absolute pointer-events-none" style="right: 12px;" width="22"
                          height="22" viewBox="0 0 22 22">
@@ -34,12 +34,22 @@
                 </button>
 
                 <div  x-show="show" class="py-2 absolute bg-gray-100 w-full mt-2 rounded-xl z-50" style="display: none">
-                    <a href="#" class="block text-left px-3 text-sm leading-6 hover:bg-blue-500
-                    focus:bg-blue-500 hover:text-white focus:text-white mx-1 rounded-md">One</a>
-                    <a href="#" class="block text-left px-3 text-sm leading-6 hover:bg-blue-500
-                    focus:bg-blue-500 hover:text-white focus:text-white mx-1 rounded-md">Two</a>
-                    <a href="#" class="block text-left px-3 text-sm leading-6 hover:bg-blue-500
-                    focus:bg-blue-500 hover:text-white focus:text-white mx-1 rounded-md">Three</a>
+                    <a href="/" class="block text-left px-3 text-sm leading-6
+                        hover:bg-blue-500
+                        focus:bg-blue-500 hover:text-white focus:text-white mx-1 rounded-md">All</a>
+
+                    @foreach($categories as $category)
+                        <a
+                            href="/categories/{{ $category->slug }}"
+                            class="block text-left px-3 text-sm leading-6 hover:bg-blue-500
+                            focus:bg-blue-500 hover:text-white focus:text-white mx-1 rounded-md
+                            {{ isset($currentCategory) && $currentCategory->is($category) ? 'bg-blue-500
+                            text-white' : ''}}
+                            "
+                        >
+                            {{ ucwords($category->name) }}
+                        </a>
+                    @endforeach
                 </div>
             </div>
 

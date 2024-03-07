@@ -6,7 +6,7 @@
                 <div class="col-span-4 lg:text-center lg:pt-14 mb-10">
                     <img src="/images/illustration-1.png" alt="" class="rounded-xl">
 
-                    <p class="mt-4 block text-gray-400 text-xs">
+                    <p class="mt-4 block text-gray-400 text-xs gap-1">
                         Published <time>{{ $post->created_at->diffForHumans() }}</time>
                     </p>
 
@@ -51,6 +51,16 @@
                 </div>
 
                 <section class="mt-10 col-span-8 col-start-5 space-y-6">
+                    <form method="POST" action="" class="border border-gray-200 p-6 rounded-xl">
+                        @csrf
+
+                        <header>
+                            <img src="https://i.pravatar.cc/100?u={{ auth()->id() }}" alt="" class="rounded-full"
+                                 height="40" width="40">
+                            <h2>Want to participate?</h2>
+                        </header>
+                    </form>
+
                     @foreach($post->comments as $comment)
                         <x-post-comment :comment="$comment"/>
                     @endforeach

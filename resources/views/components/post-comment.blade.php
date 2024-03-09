@@ -3,7 +3,7 @@
 <x-panel class="bg-gray-50">
 <article class="flex gap-2 ">
     <div class="flex-shrink-0">
-        <img src="https://i.pravatar.cc/100?u={{ $comment->id }}" alt="" class="rounded-xl">
+        <img src="https://i.pravatar.cc/100?u={{ $comment->user_id }}" alt="" class="rounded-xl">
     </div>
 
     <div>

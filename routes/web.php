@@ -12,6 +12,19 @@ use App\Models\Post;
 use Spatie\YamlFrontMatter\YamlFrontMatter;
 use App\Models\User;
 
+Route::get('ping', function () {
+    $mailchimp = new \MailchimpMarketing\ApiClient();
+
+    $mailchimp->setConfig([
+        'apiKey' => config('services.mailchimp.key'),
+        'server' => 'us18'
+    ]);
+
+    $response = $mailchimp->lists->getAllLists();
+
+    ddd($response);
+});
+
 Route::get('/', [PostController::class, 'index'])->name('home');
 Route::get('posts/{post:slug}', [PostController::class, 'show']);
 Route::post('posts/{post:slug}/comments', [PostCommentsController::class, 'store']);

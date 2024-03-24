@@ -12,7 +12,9 @@ use App\Models\Post;
 use Spatie\YamlFrontMatter\YamlFrontMatter;
 use App\Models\User;
 
-Route::get('ping', function () {
+Route::post('newsletter', function () {
+    request()->validate(['email' => 'required|email']);
+
     $mailchimp = new \MailchimpMarketing\ApiClient();
 
     $mailchimp->setConfig([
@@ -20,9 +22,18 @@ Route::get('ping', function () {
         'server' => 'us18'
     ]);
 
-    $response = $mailchimp->lists->getAllLists();
+    try {
+        $response = $mailchimp->lists->addListMember('d544f2ffdc', [
+            'email_address' => request('email'),
+            'status' => 'subscribed'
+        ]);
+    } catch (\Exception $e) {
+        throw \Illuminate\Validation\ValidationException::withMessages([
+            'email' => 'This email could not be added to our newsletter list.'
+        ]);
+    }
 
-    ddd($response);
+    return redirect('/')->with('success', 'You are now subscribed for our newsletter.');
 });
 
 Route::get('/', [PostController::class, 'index'])->name('home');

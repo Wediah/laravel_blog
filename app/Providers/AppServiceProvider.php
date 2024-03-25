@@ -2,8 +2,11 @@
 
 namespace App\Providers;
 
+use App\Services\Newsletter;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\ServiceProvider;
+use MailchimpMarketing\ApiClient;
+use Spatie\FlareClient\Api;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -12,7 +15,14 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        app()->bind(Newsletter::class, function () {
+            $client = (new ApiClient())->setConfig([
+                'apiKey' => config('services.mailchimp.key'),
+                'server' => 'us18'
+            ]);
+
+            return new Newsletter($client);
+        });
     }
 
     /**

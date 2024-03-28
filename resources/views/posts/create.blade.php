@@ -1,6 +1,6 @@
 <x-layout>
     <section class="px-6 py-8">
-        <x-panel>
+        <x-panel class="max-w-sm mx-auto">
             <form method="POST"
                   action="/admin/posts"
             >
@@ -87,17 +87,13 @@
 
                 <div class="mb-6">
                     <label class="block mb-2 uppercase font-bold text-xs text-gray-700"
-                           for="categoryId"
+                           for="category_id"
                     >
                         Category
                     </label>
 
-                    <select name="categoryId" id="categoryId">
-                        @php
-                            $categories = \App\Models\Category::all();
-                        @endphp
-
-                        @foreach($categories as $category)
+                    <select name="category_id" id="category_id">
+                        @foreach(\App\Models\Category::all() as $category)
                         <option
                             value={{ $category->id }}
                         {{ old('$category_id') == $category->id ? 'selected' : '' }}
@@ -108,7 +104,7 @@
 
                     </select>
 
-                    @error('categoryId')
+                    @error('category')
                     <p class="text-red-500 text-xs mt-2">{{ $message }}</p>
                     @enderror
                 </div>

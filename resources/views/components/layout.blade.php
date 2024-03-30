@@ -32,7 +32,23 @@
 
         <div class="mt-8 md:mt-0 flex items-center gap-3">
             @auth
-                <span class="text-xs font-bold uppercase">Welcome, {{ auth()->user()->name }}</span>
+                <x-dropdown>
+                    <x-slot name="trigger">
+                        <button class="text-xs font-bold uppercase">Welcome, {{ auth()->user()->name }}</button>
+                    </x-slot>
+
+                    <x-dropdown-item
+                    href="/admin/dashboard"
+                    >
+                        Dashboard
+                    </x-dropdown-item>
+                    <x-dropdown-item
+                        href="/admin/posts/create"
+                        :active="request()->is('admin/posts/create')"
+                    >
+                        New Post
+                    </x-dropdown-item>
+                </x-dropdown>
 
                 <form method="POST" action="/logout">
                     @csrf

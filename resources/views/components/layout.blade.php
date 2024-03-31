@@ -48,14 +48,20 @@
                     >
                         New Post
                     </x-dropdown-item>
+                    <x-dropdown-item
+                        href="#"
+                        x-data="{}"
+                        @click.prevent="document.querySelector('#logout-form').submit()"
+                    >
+                        Log Out
+                    </x-dropdown-item>
+
+                    <form id="logout-form" method="POST" action="/logout" class="hidden">
+                        @csrf
+                    </form>
                 </x-dropdown>
 
-                <form method="POST" action="/logout">
-                    @csrf
 
-                    <input type="submit" value="Log Out" class="font-semibold text-blue-500 text-sm p-2 rounded-xl
-                    cursor-pointer"/>
-                </form>
             @else
                 <a href="/register" class="text-xs font-bold uppercase">Register</a>
                 <a href="/login" class="text-xs font-bold uppercase">Login</a>

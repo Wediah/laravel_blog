@@ -13,7 +13,7 @@
                     <div class="mb-6 mt-4">
                         <input
                             type="submit"
-                            class="bg-blue-400 text-white rounded py-2 px-4 hover:bg-blue-500 cursor-pointer"
+                            class="bg-blue-400 text-white rounded-full py-2 px-4 hover:bg-blue-500 cursor-pointer"
                             value="Log In"
                         >
                     </div>

@@ -1,15 +1,12 @@
-@props(['name', 'type' => 'text', 'autocomplete'])
+@props(['name'])
 
 <x-form.field>
     <x-form.label name="{{ $name }}" />
 
     <input class="border border-gray-200 p-2 w-full rounded"
-           type="{{ $type }}"
            name="{{ $name }}"
            id="{{ $name }}"
-           autocomplete="{{ $autocomplete }}"
-           required
-           value={{ old($name) }}
+            {{ $attributes(['value' => old($name)]) }}
 
     >
 

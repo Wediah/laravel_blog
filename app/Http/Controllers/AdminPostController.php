@@ -38,6 +38,10 @@ class AdminPostController extends Controller
         Post::create($attributes);
 
         return redirect('/');
+
+//        $path = request()->file('thumbnail')->store('public/thumbnails');
+//
+//        return 'Done: ' . $path;
     }
 
     public function edit(Post $post)
@@ -62,6 +66,6 @@ class AdminPostController extends Controller
 
         $post->update($attributes);
 
-        return back()->with('success', 'Post Updated');
+        return back()->with('success', 'Post Updated!');
     }
 }

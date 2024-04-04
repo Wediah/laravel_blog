@@ -22,26 +22,17 @@ class AdminPostController extends Controller
 
     public function store()
     {
+        //this is an alt
+//        $attributes = $this->validatePost();
+//        $attributes['user_id'] = auth()->id();
+//        $attributes['thumbnail'] = request()->file('thumbnail')->store('thumbnails');
 
-        $attributes = request()->validate([
-            'title' => 'required',
-            'thumbnail' => 'required|image',
-            'slug' => ['required', Rule::unique('posts', 'slug')],
-            'excerpt' => 'required',
-            'body' => 'required',
-            'category_id' => ['required', Rule::exists('categories', 'id')]
-        ]);
-
-        $attributes['user_id'] = auth()->id();
-        $attributes['thumbnail'] = request()->file('thumbnail')->store('thumbnails');
-
-        Post::create($attributes);
+        Post::create(array_merge($this->validatePost(), [
+            'user-id' => request()->user()->id,
+            'thumbnail' => request()->file('thumbnail')->store('thumbnails')
+        ]));
 
         return redirect('/');
-
-//        $path = request()->file('thumbnail')->store('public/thumbnails');
-//
-//        return 'Done: ' . $path;
     }
 
     public function edit(Post $post)
@@ -51,14 +42,7 @@ class AdminPostController extends Controller
 
     public function update(Post $post)
     {
-        $attributes = request()->validate([
-            'title' => 'required',
-            'thumbnail' =>'image',
-            'slug' => ['required', Rule::unique('posts', 'slug')->ignore($post->id)],
-            'excerpt' => 'required',
-            'body' => 'required',
-            'category_id' => ['required', Rule::exists('categories', 'id')]
-        ]);
+        $attributes = $this->validatePost($post);
 
         if (isset($attributes['thumbnail'])) {
             $attributes['thumbnail'] = request()->file('thumbnail')->store('thumbnails');
@@ -74,5 +58,23 @@ class AdminPostController extends Controller
         $post->delete();
 
         return back()->with('success', 'Post delete');
+    }
+
+    /**
+     * @param Post $post
+     * @return array
+     */
+    public function validatePost(?Post $post = null): array
+    {
+        $post ??= new Post();
+
+        return request()->validate([
+            'title' => 'required',
+            'thumbnail' => $post->exists ? ['image'] : ['required', 'image'],
+            'slug' => ['required', Rule::unique('posts', 'slug')->ignore($post->id)],
+            'excerpt' => 'required',
+            'body' => 'required',
+            'category_id' => ['required', Rule::exists('categories', 'id')]
+        ]);
     }
 }

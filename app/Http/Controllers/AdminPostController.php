@@ -64,7 +64,7 @@ class AdminPostController extends Controller
      * @param Post $post
      * @return array
      */
-    public function validatePost(?Post $post = null): array
+    protected function validatePost(?Post $post = null): array
     {
         $post ??= new Post();
 

@@ -8,7 +8,7 @@ use Illuminate\Validation\Rule;
 
 class AdminPostController extends Controller
 {
-    public function index()
+    public function index(): \Illuminate\Contracts\View\Factory|\Illuminate\Foundation\Application|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
     {
         return view('admin.posts.index', [
             'posts' => Post::paginate(50)
